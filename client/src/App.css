@@ -1,0 +1,56 @@
+:root{
+    --blue: rgb(6, 93, 122);
+    --white: white;
+    --gray: lightgray;
+}
+body {
+    background-color: var(--blue);
+}
+.app h1 {
+    background-color: white;
+    border-top: 10px solid black;
+    border-bottom: 10px solid black;
+    border-width: thick;
+    padding: 2%;
+    font-size: 2em;
+    margin: 0.67em 0;
+}
+.app h1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.app .center {
+    margin: auto;
+}
+.base-grid {
+    display: grid;
+    column-gap: 3px;
+    row-gap: 10px;
+}
+.home-columns {
+    grid-template-columns: repeat(6, 1fr);
+}
+.full-width {
+    grid-column-start: span 6;
+}
+.center {
+    justify-self: center;
+    margin-top: 3%;
+}
+.fit {
+    display: flex;
+}
+
+.header-img {
+    grid-column-start: span 2;
+}
+.header-p {
+    grid-column-start: span 4;
+}
+footer {
+    margin-top: 5%;
+    background-color: white;
+    padding: 20px 0px 20px 0px;
+    height: 100%;
+}

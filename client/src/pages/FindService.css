@@ -1,0 +1,105 @@
+:root{
+    --blue: rgb(6, 93, 122);
+    --white: white;
+    --green: rgb(137, 199, 22);
+    --purple: purple;
+    --gray: lightgray;
+}
+body{
+    text-align: center;
+}
+.base-grid {
+    display: grid;
+    column-gap: 10px;
+    row-gap: 25px;
+}
+.fit {
+    display: flex;
+}
+.distribute-even {
+    justify-content: space-evenly;
+}
+.home-columns {
+    grid-template-columns: repeat(6, 1fr);
+}
+.full-width {
+    grid-column-start: span 6;
+}
+.nav-columns {
+    grid-template-columns: repeat(5, 1fr);
+    border: 10px solid var(--green);
+    border-width: thick;
+    padding: 0.5%;
+    background-color: var(--green);
+    border-radius: 10px;
+    margin: 3% 15% 0% 15%;
+}
+.btn {
+    background-color: var(--green);
+    color: var(--white);
+    padding: 0.5%;
+    font-weight: bolder;
+    font-size: 1.25 rem;
+}
+.center {
+    justify-self: center;
+}
+h3 {
+    color: purple;
+    margin-top: 0%;
+}
+h5 {
+    text-align: center;
+}
+.options {
+    grid-template-columns: repeat(6, 1fr);
+    border: 2px solid black;
+    padding: 0.5%;
+    background-color: white;
+    /* margin: 3% 10% 0% 10%; */
+}
+.select {
+    grid-column-start: span 3;
+}
+.zipcode {
+    grid-column-start: span 2;
+    padding: 12px 20px;
+    margin: 8px 0px;
+}
+.go {
+    grid-column-start: span 1;
+    padding: 12px 20px;
+    margin: 8px 0px;
+}
+.results {
+    grid-template-columns: repeat(4, 1fr);
+    border: 7px solid lightskyblue;
+    border-width: thick;
+    padding: 0.5%;
+    background-color: white;
+    border-radius: 10px;
+    margin: 3% 10% 0% 10%;
+}
+.btn-more {
+    background-color: rgb(36, 36, 187);
+    color: white;
+    padding: 2%;
+    font-weight: bolder;
+    font-size: 0.75rem;
+    max-width: 35%;
+    justify-content: center;
+    border-radius: 10px;
+    margin-bottom: 0%;
+}
+.find {
+    /* grid-template-columns: repeat(4, 1fr); */
+    border: solid black;
+    border-style: dotted;
+    padding: 0.5%;
+    background-color: white;
+    margin: 3% 10% 3% 10%;
+    font-size: 0.75rem;
+}
+h6 {
+    color: rgb(91, 158, 4);
+}

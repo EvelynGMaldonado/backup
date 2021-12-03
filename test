@@ -1,0 +1,42 @@
+updateUser: (_, { first_name, last_name, username, email, password, confirm_password, aboutme, profpic }) => {
+      const user = find(users, context.user._id);
+      if (!user) {
+        throw new Error(`couldn't find user by id ${ID}`)
+      }
+      if (first_name !== undefined) {
+        user.first_name = first_name;
+      }
+      if (last_name !== undefined) {
+        user.last_name = last_name;
+      }
+      if (username !== undefined) {
+        user.username = username;
+      }
+      if (email !== undefined) {
+        user.email = email;
+      }
+      if (password !== undefined) {
+        user.password = password;
+      }
+      if (confirm_password !== undefined) {
+        user.confirm_password = confirm_password;
+      }
+      if (aboutme !== undefined) {
+        user.aboutme = aboutme;
+      }
+      if (profpic !== undefined) {
+        user.profpic = profpic;
+      }
+      return user;
+    },
+
+
+    findUser: (_, {_id}, context) => find(users, {_id}),
+
+
+
+  },
+
+
+
+  , confirm_password: String!, aboutme: String!, profpic: String!
