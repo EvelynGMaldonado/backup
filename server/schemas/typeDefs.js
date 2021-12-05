@@ -31,7 +31,7 @@ const typeDefs = gql`
 
   type Query {
     me: User
-    findServicePost(location:String, service:String):[ServicePost]
+    findServicePost(location:String, type:String):[ServicePost]
     users: [User]!
     services (username: String): [ServicePost]
     findUser (_id: ID!): User
@@ -50,6 +50,7 @@ const typeDefs = gql`
   input ServicePostInput {
     name: String
     description: String
+    type: String
     location:String
     hourly_rate: String
     phone_number: String

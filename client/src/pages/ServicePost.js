@@ -6,28 +6,15 @@ import {QUERY_FINDSERVICE} from '../utils/queries';
 import { useParams } from 'react-router-dom';
 import "./ServicePost.css"
 
-// const ServicePost = (socket, userS) =>{
+
 const ServicePost = () =>{
-//     const [message, setMessage] = useState(false);
-//     const [hireService, setHireService] = useState(false);
 
-//     const handleNotification = async (type) => {
-//         // event.preventDefault();
-//         setHireService(true);
-//         socket?.emit("sendNotification", {
-//             senderName: userS,    //sebderName: user's username
-//             receiverName: service.user.first_name,
-//             type
-//         })
-//     };
-
-
-    const { location, type } = useParams()
+    const { location, type } = useParams();
     // const [formState, setFormState] = useState({ 
     //     type: '',
     //     location: '', 
     // });
-    const [service, setService] = useState({location: '', description: '', hourly_rate: '', user: {first_name: '', last_name: ''}})
+    const [service, setService] = useState({location: '', description: '', type: '', hourly_rate: '', user: {first_name: '', last_name: ''}})
 
     const { loading, data, error } = useQuery(QUERY_FINDSERVICE, {
         fetchPolicy: "no-cache",

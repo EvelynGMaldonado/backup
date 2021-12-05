@@ -17,20 +17,6 @@ import OfferService from './pages/OfferService';
 import FindService from './pages/FindService';
 import NotFound from './pages/NotFound';
 import "./App.css";
-// import { io } from "socket.io-client";
-
-// const client = new ApolloClient({
-//   request: operation => {
-//     const token = localStorage.getItem('id_token');
-//     operation.setContext ({
-//       headers: {
-//         authorization: token ? `Bearer ${token}` : "",
-//       },
-//     });
-//     },
-//     uri: '/graphql',
-//     cache: new InMemoryCache(),
-//   });
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({

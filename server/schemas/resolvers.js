@@ -24,10 +24,10 @@ const resolvers = {
       }
       throw new AuthenticationError("User is not logged in")
     },
-    findServicePost: async (parent, { location, service }) => {
+    findServicePost: async (parent, { location, type }) => {
       // console.log("findservice post")
       //if context has an 'user property' then it means that the user excecuting this query has a valid JWT and is already logged i
-      const params = location ? { location, service } : {service};
+      const params = location ? { location, type } : {type};
       return ServicePost.find(params).populate("user");
     },
     services: async (parent, { username }) => {

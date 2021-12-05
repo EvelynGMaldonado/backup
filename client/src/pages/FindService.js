@@ -10,6 +10,7 @@ import { QUERY_SERVICES} from '../utils/queries'
 import { Redirect, useParams } from 'react-router-dom';
 
 const FindServicePost = () =>{
+    
     const [formState, setFormState] = useState({ 
         type: '',
         location: '', 
@@ -27,8 +28,8 @@ const FindServicePost = () =>{
     // useEffect(() => {
         
     // }, [data])
-    console.log('data: ', data)
-    console.log("service: ", service);
+    // console.log('data: ', data)
+    // console.log("service: ", service);
     // console.log(findServicePost);
     // const service= loading?null:data.findServicePost;
     // console.log(service)
@@ -118,6 +119,7 @@ const FindServicePost = () =>{
             </form>
             <section className="edit full-width">
                 {
+                    // data && data.findServicePost ? ( data.findServicePost.map((post) => (
                     service.map((post) => (
                 <div className="editprof fit stack" key={post.type} style={{margin:"auto", maxWidth:"70%"}}>
                     <h4 className="ed">RESULTS</h4>
@@ -135,6 +137,7 @@ const FindServicePost = () =>{
                     </div>
                 </div>
                     ))
+                    // ) : null
     }
             </section>
         </main>

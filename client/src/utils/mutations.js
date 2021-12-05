@@ -89,7 +89,7 @@ mutation addServicePost($type: String!, $name: String!, $description: String!, $
 export const SAVED_SERVICE_POST = gql `
 mutation savedServicePost($servicePostId: ID!) {
   savedServicePost(servicePostId: $servicePostId) {
-    _id: ID
+    _id
       first_name
       last_name
       username
@@ -104,7 +104,7 @@ mutation savedServicePost($servicePostId: ID!) {
       }
     
   }
-}`
+}`;
 
 export const REMOVE_SERVICE_POST = gql `
 mutation removeServicePost($_id: ID!) {
@@ -124,6 +124,6 @@ mutation removeServicePost($_id: ID!) {
       }
     
   }
-}`
+}`;
 
 
