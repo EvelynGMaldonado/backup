@@ -58,7 +58,7 @@ const client = new ApolloClient({
   
   
 
-function App() {
+function App({updateLocal}) {
   const [user, setUser] = useState(null);
  
   return (
@@ -82,25 +82,25 @@ function App() {
         </header>
           <Switch>
             <Route exact path="/signup">
-              <SignUp setUser={setUser}/>
+              <SignUp setUser={setUser} updateLocal={updateLocal}/>
             </Route>
             <Route exact path="/profile">
-              <UserProfile user={user}/>
+              <UserProfile user={user} updateLocal={updateLocal}/>
             </Route>
             <Route exact path="/edit-profile">
-              <EditProfile setUser={setUser}/>
+              <EditProfile setUser={setUser} updateLocal={updateLocal}/>
             </Route>
-            <Route exact path="/service-post">
-              <ServicePost/>
+            <Route exact path="/service-post/:location/:type">
+              <ServicePost updateLocal={updateLocal}/>
             </Route>
             <Route exact path="/offer-service">
-              <OfferService/>
+              <OfferService updateLocal={updateLocal}/>
             </Route>
             <Route exact path="/find-service">
-              <FindService/>
+              <FindService updateLocal={updateLocal} />
             </Route>
             <Route exact path="/">
-              <Home setUser={setUser}/>
+              <Home setUser={setUser} updateLocal={updateLocal}/>
             </Route>
             <Route>
               <NotFound />

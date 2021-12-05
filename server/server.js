@@ -1,51 +1,10 @@
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 const path = require('path');
-
 const { typeDefs, resolvers } = require('./schemas');
 const { authMiddleware } = require('./utils/auth');
 const db = require('./config/connection');
-
-// const { createServer } = require('http');
-// const { Server } = require("socket.io");
-// const io = new Server(httpServer);
-
-// let onlineUsers =[]
-// const addNewSocketUser = (username, soketId) => {
-//   !onlineUsers.some(userS=>userS.username === username) && onlineUsers.push({ username, socketId });
-// };
-// const deleteSoketUser = (socketId) => {
-//   onlineUsers = onlineUsers.filter(userS => userS.socketId !== socketId );
-// };
-// const getOneSocketUser = (username) => {
-//   return onlineUsers.find(userS=>userS.username === username);
-// };
-// io.on("connection", (socket) => {
-//     socket.on("newSocketUser", (username) => {
-//       addNewSocketUser(username, socket.id);
-//     });
-//     socket.on("disconnect",() => {
-//       deleteSoketUser(socket.id);
-//     });
-  // [
-  //   // {
-  //   //   userId:1,
-  //   //   socketId:"user1"
-  //   // },
-  //   {
-  //     username:"Monika",
-  //     socketId:"socketidhere"
-  //   }
-  // ]
-
-  // console.log("someone has connected-socket.io");
-  // io.emit("firstEvent", "sending a socket message during my first event")
-  // socket.on("disconnect", ()=> {
-  //   console.log("someone has left")
-  // })
-// });
-// io.listen(3000);
-
+const cors = require('cors');
 const PORT = process.env.PORT || 3001;
 const app = express();
 const server = new ApolloServer({

@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import Auth from '../utils/auth';
 // import { useMutation } from '@apollo/react-hooks';
 import { useMutation } from '@apollo/client';
+import { FormattedMessage } from 'react-intl';
 import {LOGIN_USER} from '../utils/mutations';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
@@ -55,7 +56,7 @@ import "./Home.css";
 //   };
   
 // };
-const Home = ({ setUser }) => {
+const Home = ({ setUser, updateLocal }) => {
   // const { loading, data } = useQuery(QUERY_ME, {
   //   fetchPolicy: "no-cache"
   // });
@@ -79,7 +80,11 @@ const Home = ({ setUser }) => {
   // const [showAlert, setShowAlert] = useState(false);
   // const [loginUser] = useMutation(LOGIN_USER);
 
-
+  const handleLanguageChange = (event) => {
+    const { name, value } = event.target;
+    console.log(name, value);
+    updateLocal(value);
+  }
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -166,7 +171,7 @@ const Home = ({ setUser }) => {
       </div>
       <nav className="full-width nav-columns distribute-even fit">
         <Link to="/profile">
-          <button className="btn">Profile</button>
+          <button className="btn"><FormattedMessage id="profile"/></button>
         </Link>
         <Link to="/find-service">
         <button className="btn">Find Service</button>
@@ -174,7 +179,15 @@ const Home = ({ setUser }) => {
         <Link to="/offer-service">
         <button className="btn">Offer Service</button>
         </Link>
-        <button className="btn">Language</button>
+        <select 
+                type="text"
+                className="btn select"
+                name="language"
+                onChange={handleLanguageChange}
+                >
+                    <option>English</option>
+                    <option>Spanish</option>
+                </select>
         <button onClick={Auth.logout}className="btn">Logout</button>
       </nav>
       <div className="images full-width distribute-even fit">
@@ -189,7 +202,7 @@ const Home = ({ setUser }) => {
       </div >
       <section className="login">
           <form onSubmit={handleFormSubmit} className=" signin fit stack" style={{margin:"auto", maxWidth:"65%"}}>
-            <h4 className="log">Login</h4>
+            <h4 className="log"><FormattedMessage id="login"/></h4>
             <div className="empw full-width">
               <label>Email</label>
               <input 

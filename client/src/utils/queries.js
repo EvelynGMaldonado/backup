@@ -82,19 +82,25 @@ query findUser($_id: ID!) {
   }
 }`
 
-// export const QUERY_FIND_SERVICE_POST = gql`
-// query findServicePost($location:String!){
-//   findServicePost(location:$location){
-//     _id
-//     name
-//     description
-//     location
-//     hourly_rate
-//     phone_number
-//     user{
-//       first_name
-//       last_name
-//       username
-//     }
-//   }
-// }
+export const QUERY_FINDSERVICE = gql`
+query findServicePost($location: String!, $type: String!){
+  findServicePost(location: $location, type: $type){
+    _id
+    name
+    type
+    description
+    location
+    hourly_rate
+    phone_number
+    image
+    user{
+        first_name
+        last_name
+        username
+        email
+        password
+        profpic
+        aboutme
+    }
+  }
+}`;
