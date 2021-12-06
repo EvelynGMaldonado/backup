@@ -46,7 +46,7 @@ const resolvers = {
   Mutation: {
     //creates a single user an a jwt token for that user
     addUser: async (parent, {first_name, last_name, username, email, password}) => {
-      // console.log("mutation add user")
+      console.log("mutation add user")
       try {
         //create a new user first
         const user = await User.create({first_name, last_name, username, email, password});

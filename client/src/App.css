@@ -23,6 +23,89 @@ body {
 .app .center {
     margin: auto;
 }
+.app .notifications {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+}
+.app .messages {
+    padding: 7px;
+
+}
+.app .jobrequests {
+    padding: 7px;
+
+}
+.app .notification {
+    /* for notifications container */
+    position: absolute;
+    display:flex;
+    flex-direction: column;
+    padding: 10px;
+    background-color: white;
+    color: black;
+
+}
+
+.app .declineBtn {
+    background-color: rgb(35, 12, 240);
+    color: white;
+    border: none;
+    padding: 2%;
+    font-weight: bolder;
+    font-size: 0.75rem;
+    max-width: 35%;
+    justify-content: center;
+    border-radius: 10px;
+    margin-bottom: 0%;
+
+}
+
+.app .acceptBtn {
+    background-color: rgb(35, 12, 240);
+    color: white;
+    border: none;
+    padding: 2%;
+    font-weight: bolder;
+    font-size: 0.75rem;
+    max-width: 35%;
+    justify-content: center;
+    border-radius: 10px;
+    margin-bottom: 0%;
+
+}
+
+.app .readBtn {
+    background-color: rgb(35, 12, 240);
+    color: white;
+    border: none;
+    padding: 2%;
+    font-weight: bolder;
+    font-size: 0.75rem;
+    max-width: 35%;
+    justify-content: center;
+    border-radius: 10px;
+    margin-bottom: 0%;
+
+}
+.app .counter {
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+    padding: 7px;
+    font-size: 0.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color:white;
+    font-weight: bolder;
+    position: absolute;
+    top: -15px;
+    margin-left:5%;
+}
+
 .base-grid {
     display: grid;
     column-gap: 3px;
@@ -54,3 +137,11 @@ footer {
     padding: 20px 0px 20px 0px;
     height: 100%;
 }
+.userImg {
+    width: 30px;
+    /* height: 30px; */
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+}
+/* object-fit: cover; */

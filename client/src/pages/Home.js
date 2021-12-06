@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Auth from '../utils/auth';
 // import { useMutation } from '@apollo/react-hooks';
@@ -8,77 +8,22 @@ import {LOGIN_USER} from '../utils/mutations';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { QUERY_ME } from '../utils/queries';
+import { io } from "socket.io-client";
+
 import "./Home.css";
 
-// const LoginForm = () => {
-//   const [userFormData, setUserFormData] = useState({
-//     first_name: "",
-//     last_name: "",
-//     username: "",
-//     email: "",
-//     password: ""
-//   });
-//   const [validated] = useState(false);
-//   // const [showAlert, setShowAlert] = useState(false);
-//   const [loginUser] = useMutation(LOGIN_USER);
-
-//   const handleInputChange = (event) => {
-//     const { name, value } = event.target;
-//     setUserFormData({
-//       ...setUserFormData, [name]: value
-//     });
-//   };
-//   const handleFormSubmit = async (event) => {
-//     event.preventDefault();
-//     const form = event.currentTarget; 
-//     if (form.checkValidity() === false) {
-//       event.preventDefault();
-//       event.setPropahation();
-//     }
-//     try {
-//       const { data } = await loginUser ({
-//         variables: {
-//           ...userFormData
-//         },
-//       });
-//       Auth.login(data.login.token);
-//     } catch(err) {
-//       console.log(err);
-//       // setShowAlert(true);
-//     }
-//     setUserFormData({
-//       first_name: "",
-//       last_name: "",
-//       username: "",
-//       email: "",
-//       password: ""
-//     });
-//   };
-  
-// };
-const Home = ({ setUser, updateLocal }) => {
-  // const { loading, data } = useQuery(QUERY_ME, {
-  //   fetchPolicy: "no-cache"
-  // });
+const Home = ({ setUser, updateLocal, socket }) => {
+ 
   const [formState, setFormState] = useState({ email: '', password: '' });
   const [login, { error, data }] = useMutation(LOGIN_USER);
   const history = useHistory();
-  // const [login] = useMutation(LOGIN_USER);
-  // const User = data?.User || [];
+  // const [socket, setSocket] = useState(null);
 
-
-  // const [userFormData, setUserFormData] = useState({
-  //   first_name: "",
-  //   last_name: "",
-  //   username: "",
-  //   email: "",
-  //   password: ""
-  // });
-
-
-  // const [validated] = useState(false);
-  // const [showAlert, setShowAlert] = useState(false);
-  // const [loginUser] = useMutation(LOGIN_USER);
+  // useEffect(()=> {
+  //   const newSocket = io();
+    
+  //   setSocket(newSocket);
+  // },[]);
 
   const handleLanguageChange = (event) => {
     const { name, value } = event.target;
@@ -86,6 +31,7 @@ const Home = ({ setUser, updateLocal }) => {
     updateLocal(value);
   }
 
+  //update state based on input changes
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormState({
@@ -95,65 +41,23 @@ const Home = ({ setUser, updateLocal }) => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     console.log(formState);
-    // const form = event.currentTarget; 
-    // if (form.checkValidity() === false) {
-    //   event.preventDefault();
-    //   event.setPropahation();
-    // }
     try {
       const { data } = await login ({
         variables: {...formState},
       });
       console.log(data);
       Auth.login(data.login.token, history);
+      socket.emit("addSocketUser", data.login.token);
       setUser(data.login.user);
     } catch(err) {
       console.log(err);
-      // setShowAlert(true);
     }
-    // setUserFormData({
-    //   first_name: "",
-    //   last_name: "",
-    //   username: "",
-    //   email: "",
-    //   password: ""
-    // });
-
     // clear form values
     setFormState({
       email: '',
       password: '',
     });
   };
-
-  // };
-
-  //update state besed on input changes
-  // const handleChange = (event) =>{
-  //   const {name, value} = event.target;
-
-  //   setFormState({
-  //     ...formState,
-  //     [name]: value,
-  //     });
-  // }
-
-
-  // //submit form
-  // const handleformSubmit = async (event) =>{
-  //   event.preventDefault();
-  //   console.log(formState);
-
-  //   try{
-  //     const {data} = await addUser({
-  //       variables: {...formState},
-  //     });
-  //     Auth.login(data.addUser.token)
-  //   }
-  //   catch (err) {
-  //     console.log(err)
-  //   }
-  // }
 
   return (
     <main className="home base-grid home-columns" >

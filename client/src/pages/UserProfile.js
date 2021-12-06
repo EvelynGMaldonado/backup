@@ -2,28 +2,18 @@ import { useQuery } from '@apollo/client';
 import { Link } from 'react-router-dom';
 import Auth from '../utils/auth';
 import { QUERY_ME, QUERY_FIND_USER } from '../utils/queries';
-// import OfferService from './OfferService';
-// import ServicesbyUser from './ServicesbyUser';
 import { Redirect, useParams } from 'react-router-dom';
 
 import "./UserProfile.css";
 
 const UserProfile =() => {
-    // const {_id} = useParams();
-    // const { loading, data } = useQuery(
-    //     _id ? QUERY_FIND_USER : QUERY_ME,
-    //     {
-    //     variables: { _id: _id },
-    // }
-    // );
-    // const findUser = data?.me || data?.findUser || {};
     
     const { loading, data } = useQuery(QUERY_ME, {
     fetchPolicy: "no-cache"
     });
-    // console.log("line 11", data);
+    console.log("line 11", data);
     const user= loading?null:data.me
-    // console.log(user);
+    console.log(user);
     return(
         <main className="base-grid home-columns">
             <nav className="full-width nav-columns distribute-even fit">

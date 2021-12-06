@@ -7,7 +7,6 @@ import {
 } from '@apollo/client';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { setContext } from '@apollo/client/link/context';
-// import { InMemoryCache } from '@apollo/client';
 import Home from './pages/Home';
 import SignUp from './pages/SignUp';
 import UserProfile from './pages/UserProfile';
@@ -17,6 +16,8 @@ import OfferService from './pages/OfferService';
 import FindService from './pages/FindService';
 import NotFound from './pages/NotFound';
 import "./App.css";
+import { io } from "socket.io-client";
+
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -43,10 +44,71 @@ const client = new ApolloClient({
 });
   
   
-
+// function App({socket}) {
 function App({updateLocal}) {
   const [user, setUser] = useState(null);
- 
+  const [socket, setSocket] = useState(null);
+
+  useEffect(()=> {
+    const newSocket = io();
+
+    setSocket(newSocket);
+  },[]);
+
+  socket?.on("notificationPush", (token) =>{
+    if(token === localStorage.getItem("id_token")) {
+          console.log(token);
+    }
+
+  })
+
+  // useEffect(()=> {
+  //   socket?.on("notificationPush", (token) =>{
+  //     console.log(token);
+  //   })
+  // },[socket]);
+
+  // //socket.io
+  // //if I want to send event to server then I use socket.emit
+  // //if I want to taje event from server then I use socket.on
+  // const [username, setUsername] = useState("");
+  // const [userS, setUserS] = useState("");
+  // const [socket, setSocket] = useState(null);
+  // const [notifications, setNotifications] = useState([]);
+  // const [open, setOpen] = useState(false);
+
+  // useEffect(()=> {
+  //   //we pass the event name, the username
+  //   socket.emmit("newSocketUser", userS)
+
+  // }, [socket, userS]);
+
+  // useEffect(()=> {
+  //   setSocket(io("httpServer"));
+  //   const socket = io("httpServer"); 
+  //   socket.on("getNotificationEvent", data => {
+  //     setNotifications((prev) => [...prev, data]);
+  //   });
+  // }, [socket]);
+  // console.log(notifications);
+
+  // const displayNotification = ({senderName, type}) => {
+  //   let action;
+  //   if (type===1) {
+  //     action="requested a service"
+  //   } else { 
+  //     action="messaged you"
+  //   }
+  //   return (
+  //     <span className="notificationReturn"> {`${senderName} has ${action}`}</span>
+  //   );
+  // };
+
+  // const handleRead = ()=> {
+  //   setNotifications([]);
+  //   setOpen(false);
+  // }
+
   return (
     <ApolloProvider client={client}>
       <Router>
@@ -56,16 +118,53 @@ function App({updateLocal}) {
             <img src={require("./assets/gotchu-logo.png").default} alt="pp" style={{maxWidth:"10%"}}/>
             <p style={{fontSize:"3rem"}}>IGotcha!</p>
           </h1>
-          <div>
-            <img src={require("./assets/message.png").default} alt="pp" style={{maxWidth:"40px"}}/>
-            <div className="counter">2</div>
-          </div>
-          <div>
-            <img src={require("./assets/notification.png").default} alt="pp" style={{maxWidth:"40px"}}/>
-            <div className="counter">3</div>
-          </div>
-          
         </header>
+        <div 
+        // socket={socket} 
+        className="notifications">
+            <div 
+              // onClick={() => setOpen(!open)} 
+              className="messages">
+                <img src={require("./assets/circleletter.png").default} alt="pp" style={{maxWidth:"40px"}}/>
+                {/* {notifications.length > 0 && */}
+                <p className="counter"> 
+                  {/* {notifications.length}  */}
+                </p>
+                {/* } */}
+            </div>
+            <div 
+              // onClick={() => setOpen(!open)} 
+              className="jobrequests">
+                <img src={require("./assets/notificaticon.png").default} alt="pp" style={{maxWidth:"40px"}}/>
+                {/* {notifications.length > 0 && */}
+                <p className="counter"> 
+                  {/* {notifications.length}  */}
+                </p>
+                {/* } */}
+            </div>
+            {/* {open && ( */}
+              {/* <div className= "notification"> */}
+                {/* {notifications.map((n) => displayNotification(n))} */}
+                {/* <button 
+                // className="acceptBtn"
+                  // onClick={handleRead} 
+                >
+                  Accept
+                </button> */}
+                {/* <button 
+                // className="declineBtn"
+                >
+                  Decline
+                </button> */}
+                {/* <button 
+                // className="readBtn"
+                // onClick={handleRead} 
+                >
+                  Mark as read
+                </button> */}
+              {/* </div> */}
+            {/* )} */}
+          </div>
           <Switch>
             <Route exact path="/signup">
               <SignUp setUser={setUser} updateLocal={updateLocal}/>
@@ -77,7 +176,11 @@ function App({updateLocal}) {
               <EditProfile setUser={setUser} updateLocal={updateLocal}/>
             </Route>
             <Route exact path="/service-post/:location/:type">
-              <ServicePost updateLocal={updateLocal}/>
+              <ServicePost 
+              updateLocal={updateLocal} 
+              socket={socket}
+              // socket={socket} userS={userS}
+              />
             </Route>
             <Route exact path="/offer-service">
               <OfferService updateLocal={updateLocal}/>
@@ -86,7 +189,7 @@ function App({updateLocal}) {
               <FindService updateLocal={updateLocal} />
             </Route>
             <Route exact path="/">
-              <Home setUser={setUser} updateLocal={updateLocal}/>
+              <Home setUser={setUser} updateLocal={updateLocal} socket={socket}/>
             </Route>
             <Route>
               <NotFound />

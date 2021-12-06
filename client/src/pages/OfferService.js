@@ -29,28 +29,7 @@ const OfferService = () =>{
         phone_number: '', 
         image: '',
     });
-    // const [addServicePost, { error, data }] = useMutation(ADD_SERVICEPOST, {
-    //     update(cache, {data: { addServicePost } }) {
-    //         try {
-    //             const { services } = cache.readQuery({ query: QUERY_SERVICES });
 
-    //             cache.writeQuery({
-    //             query: QUERY_SERVICES,
-    //             data: { services: [addServicePost, ...services] },
-    //         });
-    //         } catch (e) {
-    //         console.error(e);
-    //         }
-    
-    //         // update me object's cache
-    //         const { me } = cache.readQuery({ query: QUERY_ME });
-    //         cache.writeQuery({
-    //         query: QUERY_ME,
-    //         data: { me: { ...me, services: [...me.services, addServicePost] } },
-    //         });
-    //         //servicePost
-    //     },
-    //     });
     const [addServicePost, { error, data }] = useMutation(ADD_SERVICEPOST);
     const handleInputChange = (event) => {
         const { name, value } = event.target;

@@ -4,18 +4,14 @@ import Auth from '../utils/auth';
 import { useQuery } from '@apollo/client';
 import {QUERY_FINDSERVICE} from '../utils/queries';
 import { useParams } from 'react-router-dom';
+import { io } from 'socket.io-client';
 import "./ServicePost.css"
 
-
-const ServicePost = () =>{
-
+// const ServicePost = (socket, userS) =>{
+const ServicePost = ({socket}) =>{
+    // const [socket, setSocket] = useState(null);
     const { location, type } = useParams();
-    // const [formState, setFormState] = useState({ 
-    //     type: '',
-    //     location: '', 
-    // });
     const [service, setService] = useState({location: '', description: '', type: '', hourly_rate: '', user: {first_name: '', last_name: ''}})
-
     const { loading, data, error } = useQuery(QUERY_FINDSERVICE, {
         fetchPolicy: "no-cache",
         variables: {
@@ -23,14 +19,40 @@ const ServicePost = () =>{
             location: location,
         }
     });
+    // useEffect(()=> {
+    //     const newSocket = io();
+    //     setSocket(newSocket);
+    // },[])
     useEffect(() => {
         console.log('params: ', location, type)
         if (!loading && data && data.findServicePost) {
             setService(data.findServicePost[0])
         }
     }, [data])
-    console.log('data: ', data)
-    console.log('service: ', service)
+    console.log('data: ', data);
+    console.log('service: ', service);
+
+    //socket.io
+    const [message, setMessage] = useState(false);
+    const [hireService, setHireService] = useState(false);
+    const handleNotification = (event) => {
+        event.preventDefault();
+        socket.emit("requestEvent", {
+            token: localStorage.getItem("id_token"),
+            email: service.user.email,
+            //here i can add more like service name
+        });
+    }
+
+    // const handleNotification = async (type) => {
+    //     // event.preventDefault();
+    //     setHireService(true);
+    //     socket?.emit("sendNotification", {
+    //         senderName: userS,    //senderName: user's username
+    //         receiverName: service.user.first_name,
+    //         type
+    //     })
+    // };
 
 
     return(
@@ -61,7 +83,7 @@ const ServicePost = () =>{
                     </div>
                     <button 
                         className="editprof-btn"
-                        // onClick={()=>handleNotification(1)}
+                        onClick={handleNotification}
                         >
                         Hire Service! 
                     </button>
