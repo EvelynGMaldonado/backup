@@ -124,7 +124,7 @@ db.once('open', () => {
     socket.on("requestEvent", (payload) => {
       console.log("request event line 121")
       //destructure payload
-      const { token, email } = payload; //, like serevice name
+      const { token, email } = payload; //, like serevice
       const secret = process.env.SECRET || "secret";
       const expiration = '2h';
       console.log("server.js line 127");
@@ -140,7 +140,7 @@ db.once('open', () => {
           console.log(email)
           console.log(userData.email)
           console.log("event emit notif push line 137");
-          socket.broadcast.emit("notificationPush", userToken);
+          socket.broadcast.emit("notificationPush", {userToken, email});
         }
 
       })

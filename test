@@ -1,42 +1,66 @@
-updateUser: (_, { first_name, last_name, username, email, password, confirm_password, aboutme, profpic }) => {
-      const user = find(users, context.user._id);
-      if (!user) {
-        throw new Error(`couldn't find user by id ${ID}`)
-      }
-      if (first_name !== undefined) {
-        user.first_name = first_name;
-      }
-      if (last_name !== undefined) {
-        user.last_name = last_name;
-      }
-      if (username !== undefined) {
-        user.username = username;
-      }
-      if (email !== undefined) {
-        user.email = email;
-      }
-      if (password !== undefined) {
-        user.password = password;
-      }
-      if (confirm_password !== undefined) {
-        user.confirm_password = confirm_password;
-      }
-      if (aboutme !== undefined) {
-        user.aboutme = aboutme;
-      }
-      if (profpic !== undefined) {
-        user.profpic = profpic;
-      }
-      return user;
-    },
+// //socket.io
+// io.on("connection", (socket) => {
+//   //we create an empty array of online users and it will be updated when a user connects to our server
+//   let onlineUsers =[]
 
+//   // from the onlineusers array we are filtering. it comes from client side
+//   const addNewSocketUser = (username, soketId) => {
+//   //write the conditions
+//   !onlineUsers.some(userS=>userS.username === username) && onlineUsers.push({ username, socketId });
+//   };
 
-    findUser: (_, {_id}, context) => find(users, {_id}),
+//   //disconect method 
+//   const deleteSoketUser = (socketId) => {
+//   onlineUsers = onlineUsers.filter(userS => userS.socketId !== socketId );
+//   };
 
+//   //find a user method
+//   const getOneSocketUser = (username) => {
+//   return onlineUsers.find(userS=>userS.username === username);
+//   };
+//   console.log("someone has connected-socket.io");
 
+//   //send event to every client ("event name", "event content like hello!!")
+//   io.emit("firstEvent", "sending a socket message during my first event")
+  
+//   //take event from client side adding our addNewSocketUser function
+//   socket.on("newSocketUser", (username) => {
+//     addNewSocketUser(username, socket.id);
+//   });
 
-  },
+//    //take event from client side
+//   socket.on("sendNotification", ({senderName, receiverName, type}) =>{
+//     const receiver = getUser(receiverName);
+//     //send event to one client 
+//     io.to(receiver.socketId).emit("getNotificationEvent", {
+//       senderName,
+//       type
+//     });
+//   });
 
+//   // socket.on("sendMessageNotification", ({senderName, receiverName, text}) =>{
+//   //   const receiver = getUser(receiverName);
+//   //   //send event to one client 
+//   //   io.to(receiver.socketId).emit("getNotificationEvent", {
+//   //     senderName,
+//   //     type
+//   //   });
+//   // });
 
+//   //if i want to disconnect, we dont take anything fromclient side, we only close the browser and we'll remove that user
+//   socket.on("disconnect",() => {
+//     deleteSoketUser(socket.id);
+//   });
 
-  , confirm_password: String!, aboutme: String!, profpic: String!
+//   //we filter our online users array which is gonna update our let onlineUsers array example
+//   //   [
+//   //     {
+//   //       username:"Monika",
+//   //       socketId:"socketidhere" //the events are based on this socketId and we find it thro the username
+//   //     }
+//   //   ]
+
+// });
+
+// //send event to client
+// io.listen(httpServer???);

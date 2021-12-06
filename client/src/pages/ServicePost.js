@@ -19,10 +19,7 @@ const ServicePost = ({socket}) =>{
             location: location,
         }
     });
-    // useEffect(()=> {
-    //     const newSocket = io();
-    //     setSocket(newSocket);
-    // },[])
+
     useEffect(() => {
         console.log('params: ', location, type)
         if (!loading && data && data.findServicePost) {
@@ -33,13 +30,15 @@ const ServicePost = ({socket}) =>{
     console.log('service: ', service);
 
     //socket.io
-    const [message, setMessage] = useState(false);
+    // const [message, setMessage] = useState(false);
     const [hireService, setHireService] = useState(false);
-    const handleNotification = (event) => {
+    const handleNotification = async (event) => {
         event.preventDefault();
+        setHireService(true);
         socket.emit("requestEvent", {
             token: localStorage.getItem("id_token"),
             email: service.user.email,
+            username: service.user.username,
             //here i can add more like service name
         });
     }

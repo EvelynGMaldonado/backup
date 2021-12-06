@@ -48,6 +48,10 @@ const client = new ApolloClient({
 function App({updateLocal}) {
   const [user, setUser] = useState(null);
   const [socket, setSocket] = useState(null);
+  const [notifications, setNotifications] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [serviceResponse, setServiceResponse] = useState();
+  
 
   useEffect(()=> {
     const newSocket = io();
@@ -55,12 +59,33 @@ function App({updateLocal}) {
     setSocket(newSocket);
   },[]);
 
-  socket?.on("notificationPush", (token) =>{
-    if(token === localStorage.getItem("id_token")) {
-          console.log(token);
+  socket?.on("notificationPush", ({userToken, email}) =>{
+    if(userToken === localStorage.getItem("id_token")) {
+          console.log(userToken, email);
+          console.log("a service has been requested")
+          setNotifications([...notifications, {userToken, email}])
+          setServiceResponse({email, userToken})
     }
-
+    
   })
+    const displayNotification = ({userToken, email}) => {
+    return (
+      <span className="notificationReturn" data-token={userToken}> {email} has sent you a service request </span>
+    );
+  };
+
+  const handleResponse = async (event, action) => {
+    event.preventDefault();
+    console.log(action);
+    // setHireService(true);
+    // socket.emit("requestEvent", {
+    //     token: localStorage.getItem("id_token"),
+    //     email: service.user.email,
+    //     // username: service.user.username,
+    //     //here i can add more like service name
+    // });
+}
+
 
   // useEffect(()=> {
   //   socket?.on("notificationPush", (token) =>{
@@ -73,9 +98,9 @@ function App({updateLocal}) {
   // //if I want to taje event from server then I use socket.on
   // const [username, setUsername] = useState("");
   // const [userS, setUserS] = useState("");
-  // const [socket, setSocket] = useState(null);
-  // const [notifications, setNotifications] = useState([]);
-  // const [open, setOpen] = useState(false);
+
+  
+
 
   // useEffect(()=> {
   //   //we pass the event name, the username
@@ -106,7 +131,7 @@ function App({updateLocal}) {
 
   // const handleRead = ()=> {
   //   setNotifications([]);
-  //   setOpen(false);
+    // setOpen(false);
   // }
 
   return (
@@ -123,14 +148,14 @@ function App({updateLocal}) {
         // socket={socket} 
         className="notifications">
             <div 
-              // onClick={() => setOpen(!open)} 
+              onClick={() => setOpen(!open)} 
               className="messages">
                 <img src={require("./assets/circleletter.png").default} alt="pp" style={{maxWidth:"40px"}}/>
-                {/* {notifications.length > 0 && */}
+                {notifications.length > 0 &&
                 <p className="counter"> 
-                  {/* {notifications.length}  */}
+                  {notifications.length} 
                 </p>
-                {/* } */}
+                }
             </div>
             <div 
               // onClick={() => setOpen(!open)} 
@@ -142,28 +167,29 @@ function App({updateLocal}) {
                 </p>
                 {/* } */}
             </div>
-            {/* {open && ( */}
-              {/* <div className= "notification"> */}
-                {/* {notifications.map((n) => displayNotification(n))} */}
-                {/* <button 
+            {open && (
+              <div className= "notification"> 
+                {notifications.map((n) => displayNotification(n))} 
+                <button 
                 // className="acceptBtn"
-                  // onClick={handleRead} 
+                  onClick={(event)=>handleResponse(event, "accept")} 
                 >
                   Accept
-                </button> */}
-                {/* <button 
+                </button> 
+                <button 
                 // className="declineBtn"
+                onClick={(event)=>handleResponse(event, "decline")} 
                 >
                   Decline
-                </button> */}
-                {/* <button 
+                </button> 
+                <button 
                 // className="readBtn"
-                // onClick={handleRead} 
+                onClick={(event)=>handleResponse(event, "read")} 
                 >
                   Mark as read
-                </button> */}
-              {/* </div> */}
-            {/* )} */}
+                </button> 
+              </div> 
+            )} 
           </div>
           <Switch>
             <Route exact path="/signup">
