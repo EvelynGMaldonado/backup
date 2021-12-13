@@ -11,7 +11,7 @@ import { QUERY_SERVICES, QUERY_ME } from '../utils/queries'
 
 
 const OfferService = () =>{
-    const { loading, data:userData } = useQuery(QUERY_ME, {
+    const { loading, data:userData, refetch } = useQuery(QUERY_ME, {
         fetchPolicy: "no-cache"
     });
     const user= loading?null:userData?.me;
@@ -54,7 +54,7 @@ const OfferService = () =>{
                     user: Auth.getUser()
                 },
             });
-            history.go(0);
+            refetch();
         } 
         catch (err) {
             
