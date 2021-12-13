@@ -171,7 +171,7 @@ db.once('open', () => {
           console.log(email)
           console.log(userData.email)
           console.log("event emit notif push line 137");
-          socket.broadcast.emit("notificationPush", {userToken, email});
+          socket.broadcast.emit("notificationPush", {userToken, email: data.email});
         }
 
       })
