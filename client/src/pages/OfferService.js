@@ -13,6 +13,8 @@ import { QUERY_SERVICES, QUERY_ME } from '../utils/queries'
 const OfferService = () =>{
     const { loading, data:userData, refetch } = useQuery(QUERY_ME, {
         fetchPolicy: "no-cache"
+        //pollInterval is for me to authomatically use the query me every 2 seconds and it will be insted of the refetch();
+        // pollInterval: 2000
     });
     const user= loading?null:userData?.me;
     console.log(user)
@@ -71,7 +73,7 @@ const OfferService = () =>{
                 user: Auth.getUser()
             }
         })
-        history.go(0);
+        refetch();
     }
     console.log(formState);
     return(
