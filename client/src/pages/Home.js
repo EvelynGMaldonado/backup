@@ -73,16 +73,18 @@ const Home = ({ setUser, updateLocal, socket }) => {
         <img src={require("../assets/twitter.png").default} style={{width:"30px"}} alt="pp"/>
         </div>
       </div>
+      {/* {Auth.loggedIn() ? ( */}
       <nav className="full-width nav-columns distribute-even fit">
-        <Link to="/profile">
+        { Auth.loggedIn() &&
+        (<Link to="/profile">
           <button className="btn"><FormattedMessage id="profile"/></button>
-        </Link>
+        </Link>)}
         <Link to="/find-service">
         <button className="btn">Find Service</button>
         </Link>
-        <Link to="/offer-service">
+        { Auth.loggedIn() && (<Link to="/offer-service">
         <button className="btn">Offer Service</button>
-        </Link>
+        </Link>)}
         <select 
                 type="text"
                 className="btn select"
@@ -92,7 +94,7 @@ const Home = ({ setUser, updateLocal, socket }) => {
                     <option>English</option>
                     <option>Spanish</option>
                 </select>
-        <button onClick={Auth.logout}className="btn">Logout</button>
+        {Auth.loggedIn() && (<button onClick={Auth.logout}className="btn">Logout</button>)}
       </nav>
       <div className="images full-width distribute-even fit">
         <img src={require("../assets/babysitter.jpg").default} style={{maxWidth:"10%"}} alt="pp"/>

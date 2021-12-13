@@ -59,6 +59,44 @@ function App({updateLocal}) {
     setSocket(newSocket);
   },[]);
 
+//   socket?.on("notificationPush", (payload) =>{
+//     // console.log('notification pushed: ', email, userToken)
+//     if (payload.userToken === localStorage.getItem("id_token")) {
+//       console.log(payload);
+//       const {userToken, email, reqUser} =payload;
+//       console.log("a service has been requested");
+//       setNotifications([...notifications,  {userToken, email, reqUser} ]);
+//       setServiceResponse({ reqUser, userToken });
+//     }
+//     // if(userToken && email ) {
+//     //       console.log(userToken, email);
+//     //       console.log("a service has been requested")
+//     //       setNotifications([...notifications, {userToken, email}])
+//     //       setServiceResponse({email, userToken})
+//     // }
+    
+//   })
+//   // socket?.on('requestEventResponse', () => {
+//   //   console.log('workkkeedd')
+//   // })
+//     const displayNotification = ({userToken, reqUser}) => {
+//     return (
+//       <span key="list" className="notificationReturn" data-token={userToken}> {reqUser} has sent you a service request </span>
+//     );
+//   };
+
+//   const handleResponse = async (event, action) => {
+//     event.preventDefault();
+//     console.log('action', action);
+//     // setHireService(true);
+//     socket.emit("requestEventResponse", {
+//         action: {...action, eventName: 'requestEvent'},
+//     });
+//     socket.on('EventResponsepush', ({userToken, email}) => {
+//   console.log('workkkeedd')
+// })
+// }
+
   socket?.on("notificationPush", ({userToken, email}) =>{
     if(userToken === localStorage.getItem("id_token")) {
           console.log(userToken, email);

@@ -121,6 +121,37 @@ db.once('open', () => {
       userS.push(tokenId);
     })
     //we need to get the token to initialize the socket.io
+    // socket.on("requestEvent", (payload) => {
+    //   console.log("request event line 121")
+    //   //destructure payload
+    //   const { token, email } = payload; //, like serevice
+    //   const secret = process.env.SECRET || "secret";
+    //   const expiration = '2h';
+    //   console.log("server.js line 127");
+    //   //to get the email and username
+    //   const { data } = jwt.verify(token, secret, { maxAge: expiration });
+    //   console.log("server.js line 130");
+    //   console.log(data);
+    //   const reqUser = data.email;
+      
+      
+    //   // req.user = data;
+    //   userS.forEach((userToken)=> {
+    //     console.log(userToken);
+    //     const { data: userData } = jwt.verify(userToken, secret, { maxAge: expiration });
+    //     if(!payload.eventName &&userData.email === email) {
+    //       console.log(email)
+    //       console.log(userData.email)
+    //       console.log("event emit notif push line 137");
+    //       socket.broadcast.emit("notificationPush", {userToken, email});
+    //     };
+    //     socket.on("requestEventResponse", {email, userToken});
+    //     socket.broadcast.emit("EventResponsepush", {userToken, email});
+    //     // socket.broadcast.emit("EventResponsepush", {userToken, email});
+
+    //   })
+    // })
+
     socket.on("requestEvent", (payload) => {
       console.log("request event line 121")
       //destructure payload

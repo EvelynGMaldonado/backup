@@ -14,7 +14,7 @@ const OfferService = () =>{
     const { loading, data:userData } = useQuery(QUERY_ME, {
         fetchPolicy: "no-cache"
     });
-    const user= loading?null:userData.me;
+    const user= loading?null:userData?.me;
     console.log(user)
     
     console.log(user);
