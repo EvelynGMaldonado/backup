@@ -98,8 +98,9 @@ const ServicePost = ({socket}) =>{
         setHireService(true);
         socket.emit("requestEvent", {
             token: localStorage.getItem("id_token"),
-            email: service.user.email,
-            username: service.user.username,
+            // email: service.user.email,
+            // username: service.user.username,
+            service,
             //here i can add more like service name
         });
     }

@@ -155,7 +155,7 @@ db.once('open', () => {
     socket.on("requestEvent", (payload) => {
       console.log("request event line 121")
       //destructure payload
-      const { token, email } = payload; //, like serevice
+      const { token, service} = payload; //, like service
       const secret = process.env.SECRET || "secret";
       const expiration = '2h';
       console.log("server.js line 127");
@@ -167,14 +167,20 @@ db.once('open', () => {
       userS.forEach((userToken)=> {
         console.log(userToken);
         const { data: userData } = jwt.verify(userToken, secret, { maxAge: expiration });
-        if(userData.email === email) {
-          console.log(email)
+        console.log(userData.email);
+        if(userData.email === service.user.email) {
           console.log(userData.email)
           console.log("event emit notif push line 137");
-          socket.broadcast.emit("notificationPush", {userToken, email: data.email});
-        }
-
+          socket.broadcast.emit("notificationPush", {providerToken: userToken, clientToken:token, clientEmail: data.email, service});
+        };
+        
+        
       })
+    })
+    socket.on("serviceReply", (payload) => {
+      if(payload.action==="accept" || payload.action==="decline") {
+        socket.broadcast.emit("serviceReplyPush", {clientToken:payload.clientToken, email: payload.email, action: payload.action, service:payload.service});
+      }
     })
 
     socket.on("hello", function () {

@@ -97,32 +97,63 @@ function App({updateLocal}) {
 // })
 // }
 
-  socket?.on("notificationPush", ({userToken, email}) =>{
-    if(userToken === localStorage.getItem("id_token")) {
-          console.log(userToken, email);
+  socket?.on("notificationPush", ({providerToken, clientToken, clientEmail, service}) =>{
+    if(providerToken === localStorage.getItem("id_token")) {
+          console.log(providerToken, clientEmail);
           console.log("a service has been requested")
-          setNotifications([...notifications, {userToken, email}])
-          setServiceResponse({email, userToken})
+          setNotifications([...notifications, {providerToken, clientToken, clientEmail, service, type:"serviceRequest"}])
     }
     
   })
-    const displayNotification = ({userToken, email}) => {
-    return (
-      <span className="notificationReturn" data-token={userToken}> {email} has sent you a service request </span>
-    );
-  };
+    const displayNotification = ({providerToken, clientToken, clientEmail, service, action, type}) => {
+      if(type==="serviceRequest") {
+        return (
+          <>
+            <span className="notificationReturn" > {clientEmail} has sent you a service request </span>
+            <button 
+            // className="acceptBtn"
+              onClick={(event)=>handleResponse(clientToken, "accept", clientEmail, service)} 
+            >
+              Accept
+            </button> 
+            <button 
+            // className="declineBtn"
+            onClick={(event)=>handleResponse(clientToken, "decline", clientEmail, service)} 
+            >
+              Decline
+            </button> 
+            <button 
+            // className="readBtn"
+            onClick={(event)=>handleResponse(clientToken, "read", clientEmail, service)} 
+            >
+              Mark as read
+            </button> 
+          </>
 
-  const handleResponse = async (event, action) => {
-    event.preventDefault();
+        );
+      } else if (type==="serviceReply") {
+        return (
+          <span className="notificationReturn"> {service.user.email} has {action} your service request </span>
+        )
+      }
+
+    };
+
+  const handleResponse = async (clientToken, action, email, service) => {
     console.log(action);
+    setOpen(false);
     // setHireService(true);
-    // socket.emit("requestEvent", {
-    //     token: localStorage.getItem("id_token"),
-    //     email: service.user.email,
-    //     // username: service.user.username,
-    //     //here i can add more like service name
-    // });
+    socket?.emit("serviceReply",  {
+        clientToken, action, email, service
+    });
 }
+socket?.on('serviceReplyPush', ({clientToken, email, action, service}) => {
+  console.log('workkkeedd');
+  if(clientToken === localStorage.getItem("id_token")) {
+    setNotifications([...notifications, {service, email, action, type:"serviceReply"}])
+  }
+  
+});
 
 
   // useEffect(()=> {
@@ -208,24 +239,6 @@ function App({updateLocal}) {
             {open && (
               <div className= "notification"> 
                 {notifications.map((n) => displayNotification(n))} 
-                <button 
-                // className="acceptBtn"
-                  onClick={(event)=>handleResponse(event, "accept")} 
-                >
-                  Accept
-                </button> 
-                <button 
-                // className="declineBtn"
-                onClick={(event)=>handleResponse(event, "decline")} 
-                >
-                  Decline
-                </button> 
-                <button 
-                // className="readBtn"
-                onClick={(event)=>handleResponse(event, "read")} 
-                >
-                  Mark as read
-                </button> 
               </div> 
             )} 
           </div>
